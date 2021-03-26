@@ -11,10 +11,10 @@ import org.spoorn.seethroughlava.SeeThroughLava;
 public class ModConfig implements ConfigData {
 
     @ConfigEntry.Gui.CollapsibleObject
-    public static WaterConfig waterConfig = new WaterConfig();
+    public WaterConfig waterConfig = new WaterConfig();
 
     @ConfigEntry.Gui.CollapsibleObject
-    public static LavaConfig lavaConfig = new LavaConfig();
+    public LavaConfig lavaConfig = new LavaConfig();
 
     public static void init() {
         AutoConfig.register(ModConfig.class, JanksonConfigSerializer::new);
