@@ -30,10 +30,10 @@
   "depends": {
     "fabricloader": "*",
     "fabric": "*",
-    "minecraft": ">=1.16.1",
-    "cloth-config2": "*"
+    "minecraft": ">=1.16.1"
   },
   "suggests": {
-    "modmenu": "*"
+    "modmenu": "*",
+    "cloth-config2": "*"
   }
 }
