@@ -35,5 +35,8 @@
   },
   "suggests": {
     "modmenu": "*"
+  },
+  "breaks": {
+    "modmenu": "<=1.14.13"
   }
 }
