@@ -7,8 +7,9 @@ import net.minecraft.fluid.FluidState;
 import net.minecraft.tag.FluidTags;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
-import org.spoorn.seethroughlava.config.LavaConfig;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spoorn.seethroughlava.config.ModConfig;
 import org.spoorn.seethroughlava.config.WaterConfig;
 
@@ -29,7 +30,7 @@ public class BackgroundRendererMixin {
         }
     }
 
-    @Redirect(method = "applyFog", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;fogStart(F)V"))
+    /*@Redirect(method = "applyFog", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;fogStart(F)V"))
     private static void changeFogStartInOther(float start, Camera camera, BackgroundRenderer.FogType fogType,
                                          float viewDistance, boolean thickFog) {
         FluidState fluidState = camera.getSubmergedFluidState();
@@ -39,9 +40,30 @@ public class BackgroundRendererMixin {
             // Default
             RenderSystem.fogStart(start);
         }
+    }*/
+
+    // Need to inject instead of redirect to avoid conflict with Origins mod.
+    // See https://github.com/spoorn/SeeThroughLava/issues/1
+    @Inject(method = "applyFog", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;setupNvFogDistance()V"))
+    private static void changeFogStartInOther(Camera camera, BackgroundRenderer.FogType fogType,
+        float viewDistance, boolean thickFog, CallbackInfo ci) {
+        FluidState fluidState = camera.getSubmergedFluidState();
+        if (ModConfig.get().lavaConfig.shouldOverrideLavaFogDensity && fluidState.isIn(FluidTags.LAVA)) {
+            RenderSystem.fogStart(0);
+
+            if (ModConfig.get().lavaConfig.shouldCompletelySeeThroughLava) {
+                // If this is lower than fogStart, then fog will be completely see through
+                RenderSystem.fogEnd(-0.25F);
+            } else {
+                // User configurated factor to set fog end value
+                float endVal = (float) ModConfig.get().lavaConfig.lavaSeeThroughFactor;
+                endVal = endVal > 100 ? 100 : (endVal < 0 ? 0 : endVal);
+                RenderSystem.fogEnd(endVal);
+            }
+        }
     }
 
-    @Redirect(method = "applyFog", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;fogEnd(F)V"))
+    /*@Redirect(method = "applyFog", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;fogEnd(F)V"))
     private static void changeFogEndInOther(float end, Camera camera, BackgroundRenderer.FogType fogType,
                                          float viewDistance, boolean thickFog) {
         FluidState fluidState = camera.getSubmergedFluidState();
@@ -60,5 +82,5 @@ public class BackgroundRendererMixin {
             // Default
             RenderSystem.fogEnd(end);
         }
-    }
+    }*/
 }
