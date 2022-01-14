@@ -8,9 +8,10 @@
     "spoorn"
   ],
   "contact": {
-    "homepage": "https://www.curseforge.com/minecraft/mc-mods/see-through-lava-water"
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/see-through-lava-water",
+    "sources": "https://github.com/spoorn/SeeThroughLava"
   },
-  "license": "All-Rights-Reserved",
+  "license": "GPL-3.0-only",
   "icon": "assets/seethroughlava/icon.png",
   "environment": "*",
   "entrypoints": {
@@ -31,7 +32,9 @@
     "fabricloader": "*",
     "fabric": "*",
     "minecraft": ">=1.16.1",
-    "cloth-config2": "*"
+    "minecraft": ">=1.18.0",
+    "cloth-config2": "*",
+    "java": ">=17"
   },
   "suggests": {
     "modmenu": "*"

@@ -1,11 +1,11 @@
 plugins {
-    id 'fabric-loom' version '0.7-SNAPSHOT'
+    id 'fabric-loom' version '0.10-SNAPSHOT'
     id 'maven-publish'
-    id "io.freefair.lombok" version "5.3.0"
+    id "io.freefair.lombok" version "6.3.0"
 }
 
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
 
 archivesBaseName = project.archives_base_name
 version = project.mod_version
@@ -29,8 +29,7 @@ dependencies {
     }
 
     // Mod Menu
-    modCompile("com.terraformersmc:modmenu:${project.modmenu_version}")
-    modRuntime("com.terraformersmc:modmenu:${project.modmenu_version}")
+    modApi("com.terraformersmc:modmenu:${project.modmenu_version}")
 }
 
 repositories {
@@ -46,13 +45,8 @@ repositories {
 processResources {
     inputs.property "version", project.version
 
-    from(sourceSets.main.resources.srcDirs) {
-        include "fabric.mod.json"
+    filesMatching("fabric.mod.json") {
         expand "version": project.version
-    }
-
-    from(sourceSets.main.resources.srcDirs) {
-        exclude "fabric.mod.json"
     }
 }
 

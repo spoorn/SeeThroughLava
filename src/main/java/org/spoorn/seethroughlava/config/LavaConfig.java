@@ -10,6 +10,6 @@ public class LavaConfig {
     @Comment("True if Lava should have no fog at all.  False to control fog density on configurations below [default = false")
     public boolean shouldCompletelySeeThroughLava = false;
 
-    @Comment("Factor for lava fog see-through.  Higher values means you can see more [default = 60] [min = 0; max = 150]")
+    @Comment("Factor for lava fog see-through.  Higher values means you can see more [default = 60] [min = 0; max = 200]")
     public double lavaSeeThroughFactor = 60.0;
 }
