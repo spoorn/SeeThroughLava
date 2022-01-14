@@ -2,6 +2,8 @@
   "text.autoconfig.seethroughlava.option.waterConfig.underwaterVisibility": "underwaterVisibility",
   "text.autoconfig.seethroughlava.option.lavaConfig.shouldCompletelySeeThroughLava": "shouldCompletelySeeThroughLava",
   "text.autoconfig.seethroughlava.option.lavaConfig.lavaSeeThroughFactor": "lavaSeeThroughFactor",
+  "text.autoconfig.seethroughlava.option.lavaConfig.removeFireScreenEffectInLava": "removeFireScreenEffectInLava",
+  "text.autoconfig.seethroughlava.option.lavaConfig.removeFireScreenEffectIfOnFire": "removeFireScreenEffectIfOnFire",
   "text.autoconfig.seethroughlava.option.lavaConfig.shouldOverrideLavaFogDensity": "shouldOverrideLavaFogDensity",
   "text.autoconfig.seethroughlava.option.waterConfig.shouldOverrideWaterFogDensity": "shouldOverrideWaterFogDensity",
   "text.autoconfig.seethroughlava.option.waterConfig": "Water Config",
