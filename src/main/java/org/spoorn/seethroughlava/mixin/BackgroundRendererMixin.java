@@ -42,7 +42,7 @@ public class BackgroundRendererMixin {
         }
     }
 
-    @Redirect(method = "applyFog", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;setShaderFogEnd(F)V", ordinal = 1))
+    @Redirect(method = "applyFog", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;setShaderFogEnd(F)V"))
     private static void changeFogEndInOther(float end, Camera camera, BackgroundRenderer.FogType fogType,
                                          float viewDistance, boolean thickFog) {
         CameraSubmersionType cameraSubmersionType = camera.getSubmersionType();
