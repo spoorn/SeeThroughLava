@@ -12,6 +12,9 @@ import org.spoorn.seethroughlava.config.LavaConfig;
 import org.spoorn.seethroughlava.config.ModConfig;
 import org.spoorn.seethroughlava.config.WaterConfig;
 
+/**
+ * Note: Found these mixins aren't invoked if Sodium Extra mod is installed.
+ */
 @Mixin(BackgroundRenderer.class)
 public class BackgroundRendererMixin {
 
@@ -54,7 +57,7 @@ public class BackgroundRendererMixin {
             } else {
                 // User configured factor to set fog end value
                 float endVal = (float) ModConfig.get().lavaConfig.lavaSeeThroughFactor;
-                endVal = endVal > 200 ? 200 : (endVal < 0 ? 0 : endVal);
+                endVal = endVal > 200 ? 200 : (endVal < 1 ? 1 : endVal);
                 RenderSystem.setShaderFogEnd(endVal);
             }
         } else {
