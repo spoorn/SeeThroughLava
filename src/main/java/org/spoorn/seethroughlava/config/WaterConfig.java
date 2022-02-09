@@ -7,6 +7,9 @@ public class WaterConfig {
     @Comment("True if this mod should override the native fog density of water with below configured value [default = true]")
     public boolean shouldOverrideWaterFogDensity = true;
 
-    @Comment("Underwater visibility [0.0 to 1.0; 1.0 means no fog, 0 is full fog density] [default = 0.9]")
-    public double underwaterVisibility = 0.9;
+    @Comment("True if Water should have no fog at all.  False to control fog density on configurations below [default = false")
+    public boolean shouldCompletelySeeThroughWater = false;
+
+    @Comment("Factor for water fog see-through.  Higher values means you can see more [default = 60] [min = 0; max = 200]")
+    public double waterSeeThroughFactor = 60.0;
 }
