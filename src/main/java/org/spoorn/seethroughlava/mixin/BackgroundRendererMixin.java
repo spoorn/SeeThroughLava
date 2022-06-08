@@ -24,32 +24,32 @@ public class BackgroundRendererMixin {
     
     // Override fog at the TAIL to avoid conflicts with other mods such as Origins that did redirection which I used to do
     @Inject(method = "applyFog", at = @At(value = "TAIL"))
-    private static void changeForInLava(Camera camera, BackgroundRenderer.FogType fogType, float viewDistance, boolean thickFog, CallbackInfo ci) {
+    private static void changeForInLava(Camera camera, BackgroundRenderer.FogType fogType, float viewDistance, boolean thickFog, float tickDelta, CallbackInfo ci) {
         CameraSubmersionType cameraSubmersionType = camera.getSubmersionType();
         WaterConfig waterConfig = ModConfig.get().waterConfig;
         LavaConfig lavaConfig = ModConfig.get().lavaConfig;
 
         // Default
-        if (waterConfig.shouldOverrideWaterFogDensity && cameraSubmersionType == CameraSubmersionType.WATER) {
-            if (ModConfig.get().waterConfig.shouldCompletelySeeThroughWater) {
+        if (cameraSubmersionType == CameraSubmersionType.WATER) {
+            if (waterConfig.shouldCompletelySeeThroughWater) {
                 RenderSystem.setShaderFogEnd(150F);
-            } else {
+            } else if (waterConfig.shouldOverrideWaterFogDensity) {
                 // User configured factor to set fog end value
-                float endVal = (float) ModConfig.get().waterConfig.waterSeeThroughFactor;
+                float endVal = (float) waterConfig.waterSeeThroughFactor;
                 endVal = endVal > 200 ? 200 : (endVal < 1 ? 1 : endVal);
                 RenderSystem.setShaderFogEnd(endVal);
             }
         }
 
-        if (lavaConfig.shouldOverrideLavaFogDensity && cameraSubmersionType == CameraSubmersionType.LAVA) {
-            RenderSystem.setShaderFogStart(0);
-
-            if (ModConfig.get().lavaConfig.shouldCompletelySeeThroughLava) {
+        if (cameraSubmersionType == CameraSubmersionType.LAVA) {
+            if (lavaConfig.shouldCompletelySeeThroughLava) {
+                RenderSystem.setShaderFogStart(0);
                 RenderSystem.setShaderFogEnd(150F);
-            } else {
+            } else if (lavaConfig.shouldOverrideLavaFogDensity) {
                 // User configured factor to set fog end value
-                float endVal = (float) ModConfig.get().lavaConfig.lavaSeeThroughFactor;
+                float endVal = (float) lavaConfig.lavaSeeThroughFactor;
                 endVal = endVal > 200 ? 200 : (endVal < 1 ? 1 : endVal);
+                RenderSystem.setShaderFogStart(0);
                 RenderSystem.setShaderFogEnd(endVal);
             }
         }
